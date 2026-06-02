@@ -5,7 +5,7 @@ clear; clc; close all;
 format long; % Imposta la visualizzazione interna di MATLAB ad alta precisione
 
 % 1. DEFINIZIONE DELLA FUNZIONE g(x)
-g = @(x) nthroot(-log(x+2)-2, 3);
+g = @(x) nthroot(-log(x+2)+2, 3);
 
 % 2. PARAMETRI DI INPUT
 x0 = -1.20         % Punto iniziale
