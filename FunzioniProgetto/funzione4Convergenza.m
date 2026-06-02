@@ -5,7 +5,7 @@ clear; clc; close all;
 format long; % Imposta la visualizzazione interna di MATLAB ad alta precisione
 
 % 1. DEFINIZIONE DELLA FUNZIONE g(x)
-g = @(x) sqrt((2 - log(x + 2)) ./ x);
+g = @(x) x - (x.^3 + log(x+2) - 2) ./ (3*x.^2 + 1./(x+2));
 
 % 2. PARAMETRI DI INPUT
 x0 = 0.5         % Punto iniziale
@@ -70,10 +70,9 @@ fprintf('---------------------------------------------------\n');
 figure('Name', 'Analisi di Convergenza - Punto Fisso', 'NumberTitle', 'off');
 hold on; grid on;
 
-% Definiamo un intervallo di assi appropriato intorno allo zero trovato
-xmin = max(min(X) - 1, -1.99);
-%xmin = max(min(X) - 1, -1.99); % Impedisce di andare sotto -2 (Condizioni di Esistenza)
-xmax = max(X) + 1;
+% Definiamo un intervallo di assi appropriato intorno allo zero trovato% Definiamo un intervallo di assi appropriato intorno allo zero trovato
+xmin = max(min(X) - 0.2, 0.1); % Impedisce al grafico di andare nella zona negativa pericolosa
+xmax = max(X) + 0.3;
 x_plot = linspace(xmin, xmax, 500);
 
 % Disegno la bisettrice y = x (in rosso tratteggiato)
