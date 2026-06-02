@@ -5,12 +5,12 @@ clear; clc; close all;
 format long; % Imposta la visualizzazione interna di MATLAB ad alta precisione
 
 % 1. DEFINIZIONE DELLA FUNZIONE g(x)
-g = @(x) nthroot(-log(x+2)+2, 3);
+g = @(x) sqrt((2 - log(x + 2)) ./ x);
 
 % 2. PARAMETRI DI INPUT
 x0 = 0.5         % Punto iniziale
 tol = 1e-12;      % Tolleranza ad alta precisione
-max_iter = 40;    % Numero massimo di iterazioni per il grafico
+max_iter = 150;    % Numero massimo di iterazioni per il grafico
 
 % 3. ALLOCAZIONE VETTORI PER MEMORIZZARE I PASSI
 X = zeros(1, max_iter);
@@ -71,8 +71,8 @@ figure('Name', 'Analisi di Convergenza - Punto Fisso', 'NumberTitle', 'off');
 hold on; grid on;
 
 % Definiamo un intervallo di assi appropriato intorno allo zero trovato
-%xmin = max(min(X) - 1, -1.99);
-xmin = max(min(X) - 1, -1.99); % Impedisce di andare sotto -2 (Condizioni di Esistenza)
+xmin = max(min(X) - 1, -1.99);
+%xmin = max(min(X) - 1, -1.99); % Impedisce di andare sotto -2 (Condizioni di Esistenza)
 xmax = max(X) + 1;
 x_plot = linspace(xmin, xmax, 500);
 

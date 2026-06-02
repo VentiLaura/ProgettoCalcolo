@@ -5,12 +5,12 @@ clear; clc; close all;
 format long; % Imposta la visualizzazione interna di MATLAB ad alta precisione
 
 % 1. DEFINIZIONE DELLA FUNZIONE g(x)
-g = @(x) nthroot(-log(x+2)+2, 3);
+g = @(x) (x + 2 - log(x + 2)) ./ (x.^2 + 1);
 
 % 2. PARAMETRI DI INPUT
 x0 = 0.5         % Punto iniziale
 tol = 1e-12;      % Tolleranza ad alta precisione
-max_iter = 40;    % Numero massimo di iterazioni per il grafico
+max_iter = 150;    % Numero massimo di iterazioni per il grafico
 
 % 3. ALLOCAZIONE VETTORI PER MEMORIZZARE I PASSI
 X = zeros(1, max_iter);
@@ -71,8 +71,7 @@ figure('Name', 'Analisi di Convergenza - Punto Fisso', 'NumberTitle', 'off');
 hold on; grid on;
 
 % Definiamo un intervallo di assi appropriato intorno allo zero trovato
-%xmin = max(min(X) - 1, -1.99);
-xmin = max(min(X) - 1, -1.99); % Impedisce di andare sotto -2 (Condizioni di Esistenza)
+xmin = max(min(X) - 0.5, -1.99);
 xmax = max(X) + 1;
 x_plot = linspace(xmin, xmax, 500);
 
@@ -84,17 +83,17 @@ plot(x_plot, g(x_plot), 'b-', 'LineWidth', 2, 'DisplayName', 'y = g(x)');
 
 % Disegno l'andamento iterativo (La Ragnatela)
 for k = 1:iter
-    % Segmento verticale: da (x_k, x_k) a (x_k, x_k+1) cioè su y=g(x)
+    % Segmento verticale: aggiunto 'HandleVisibility', 'off'
     if k == 1
-        plot([X(k), X(k)], [0, X(k+1)], 'g-', 'LineWidth', 1.5); 
+        plot([X(k), X(k)], [0, X(k+1)], 'g-', 'LineWidth', 1.5, 'HandleVisibility', 'off'); 
     else
-        plot([X(k), X(k)], [X(k), X(k+1)], 'g-', 'LineWidth', 1.5);
+        plot([X(k), X(k)], [X(k), X(k+1)], 'g-', 'LineWidth', 1.5, 'HandleVisibility', 'off');
     end
-    pause(0.3); % Pausa per vedere l'animazione del grafico!
+    pause(0.1); % Animazione più rapida e piacevole
     
-    % Segmento orizzontale: da (x_k, x_k+1) a (x_k+1, x_k+1) cioè sulla bisettrice
-    plot([X(k), X(k+1)], [X(k+1), X(k+1)], 'g-', 'LineWidth', 1.5);
-    pause(0.3);
+    % Segmento orizzontale: aggiunto 'HandleVisibility', 'off'
+    plot([X(k), X(k+1)], [X(k+1), X(k+1)], 'g-', 'LineWidth', 1.5, 'HandleVisibility', 'off');
+    pause(0.1);
 end
 
 % Evidenzio i punti di scatto con dei pallini neri
