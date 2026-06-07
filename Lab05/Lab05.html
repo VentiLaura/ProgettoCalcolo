@@ -1,0 +1,764 @@
+<!DOCTYPE html>
+<html>
+<head>
+  <meta charset="utf-8">
+  <meta name="generator" content="pandoc">
+  <meta name="author" content="Davide Poggiali">
+  <title>Lab05 - Zeri di funzione</title>
+  <meta name="apple-mobile-web-app-capable" content="yes">
+  <meta name="apple-mobile-web-app-status-bar-style" content="black-translucent">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no, minimal-ui">
+  <link rel="stylesheet" href="https://unpkg.com/reveal.js/dist/reset.css">
+  <link rel="stylesheet" href="https://unpkg.com/reveal.js/dist/reveal.css">
+  <style>
+    .reveal .sourceCode {  /* see #7635 */
+      overflow: visible;
+    }
+    code{white-space: pre-wrap;}
+    span.smallcaps{font-variant: small-caps;}
+    div.columns{display: flex; gap: min(4vw, 1.5em);}
+    div.column{flex: auto; overflow-x: auto;}
+    div.hanging-indent{margin-left: 1.5em; text-indent: -1.5em;}
+    ul.task-list{list-style: none;}
+    ul.task-list li input[type="checkbox"] {
+      width: 0.8em;
+      margin: 0 0.8em 0.2em -1.6em;
+      vertical-align: middle;
+    }
+    /* CSS for syntax highlighting */
+    pre > code.sourceCode { white-space: pre; position: relative; }
+    pre > code.sourceCode > span { display: inline-block; line-height: 1.25; }
+    pre > code.sourceCode > span:empty { height: 1.2em; }
+    .sourceCode { overflow: visible; }
+    code.sourceCode > span { color: inherit; text-decoration: inherit; }
+    div.sourceCode { margin: 1em 0; }
+    pre.sourceCode { margin: 0; }
+    @media screen {
+    div.sourceCode { overflow: auto; }
+    }
+    @media print {
+    pre > code.sourceCode { white-space: pre-wrap; }
+    pre > code.sourceCode > span { text-indent: -5em; padding-left: 5em; }
+    }
+    pre.numberSource code
+      { counter-reset: source-line 0; }
+    pre.numberSource code > span
+      { position: relative; left: -4em; counter-increment: source-line; }
+    pre.numberSource code > span > a:first-child::before
+      { content: counter(source-line);
+        position: relative; left: -1em; text-align: right; vertical-align: baseline;
+        border: none; display: inline-block;
+        -webkit-touch-callout: none; -webkit-user-select: none;
+        -khtml-user-select: none; -moz-user-select: none;
+        -ms-user-select: none; user-select: none;
+        padding: 0 4px; width: 4em;
+        color: #aaaaaa;
+      }
+    pre.numberSource { margin-left: 3em; border-left: 1px solid #aaaaaa;  padding-left: 4px; }
+    div.sourceCode
+      {   }
+    @media screen {
+    pre > code.sourceCode > span > a:first-child::before { text-decoration: underline; }
+    }
+    code span.al { color: #ff0000; font-weight: bold; } /* Alert */
+    code span.an { color: #60a0b0; font-weight: bold; font-style: italic; } /* Annotation */
+    code span.at { color: #7d9029; } /* Attribute */
+    code span.bn { color: #40a070; } /* BaseN */
+    code span.bu { color: #008000; } /* BuiltIn */
+    code span.cf { color: #007020; font-weight: bold; } /* ControlFlow */
+    code span.ch { color: #4070a0; } /* Char */
+    code span.cn { color: #880000; } /* Constant */
+    code span.co { color: #60a0b0; font-style: italic; } /* Comment */
+    code span.cv { color: #60a0b0; font-weight: bold; font-style: italic; } /* CommentVar */
+    code span.do { color: #ba2121; font-style: italic; } /* Documentation */
+    code span.dt { color: #902000; } /* DataType */
+    code span.dv { color: #40a070; } /* DecVal */
+    code span.er { color: #ff0000; font-weight: bold; } /* Error */
+    code span.ex { } /* Extension */
+    code span.fl { color: #40a070; } /* Float */
+    code span.fu { color: #06287e; } /* Function */
+    code span.im { color: #008000; font-weight: bold; } /* Import */
+    code span.in { color: #60a0b0; font-weight: bold; font-style: italic; } /* Information */
+    code span.kw { color: #007020; font-weight: bold; } /* Keyword */
+    code span.op { color: #666666; } /* Operator */
+    code span.ot { color: #007020; } /* Other */
+    code span.pp { color: #bc7a00; } /* Preprocessor */
+    code span.sc { color: #4070a0; } /* SpecialChar */
+    code span.ss { color: #bb6688; } /* SpecialString */
+    code span.st { color: #4070a0; } /* String */
+    code span.va { color: #19177c; } /* Variable */
+    code span.vs { color: #4070a0; } /* VerbatimString */
+    code span.wa { color: #60a0b0; font-weight: bold; font-style: italic; } /* Warning */
+  </style>
+  <link rel="stylesheet" href="https://unpkg.com/reveal.js/dist/theme/sky.css" id="theme">
+  <link rel="stylesheet" href="https://pink-ulrike-20.tiiny.site/test.css"/>
+</head>
+<body>
+  <div class="reveal">
+    <div class="slides">
+
+<section id="title-slide">
+  <h1 class="title">Lab05 - Zeri di funzione</h1>
+  <p class="author">Davide Poggiali</p>
+  <p class="date">19 Novembre 2025</p>
+</section>
+
+<section>
+<section id="sommario" class="title-slide slide level1">
+<h1>Sommario</h1>
+
+</section>
+<section id="cosa-impareremo-oggi" class="slide level2">
+<h2>Cosa impareremo oggi</h2>
+<ul>
+<li>Metodo di bisezione</li>
+<li>Test di arresto</li>
+<li>Metodi di punto fisso</li>
+<li>Metodo di Newton</li>
+<li>Ordine di convergenza</li>
+</ul>
+</section>
+<section id="introduzione-e-paradigmi" class="slide level2">
+<h2>Introduzione e paradigmi</h2>
+<p>La ricerca degli zeri di funzione attraverso metodi iterativi sta
+alla base di diverse applicazioni matematiche, fisiche ed applicative.
+Con questo strumento è possibile trovare valori intermedi e massimi e
+minimi di una funzione, con conseguenti applicazioni all’ottimizzazione
+numerica e a problemi fisici e tecnici.</p>
+</section>
+<section id="section" class="slide level2">
+<h2></h2>
+<div class="sourceCode" id="cb1"><pre
+class="sourceCode matlab"><code class="sourceCode matlab"><span id="cb1-1"><a href="#cb1-1" aria-hidden="true" tabindex="-1"></a><span class="co">% struttura generale di un algoritmo iterativo</span></span>
+<span id="cb1-2"><a href="#cb1-2" aria-hidden="true" tabindex="-1"></a><span class="co">% per la ricerca di zeri di funzione</span></span>
+<span id="cb1-3"><a href="#cb1-3" aria-hidden="true" tabindex="-1"></a><span class="kw">function</span> [<span class="va">x</span><span class="op">,</span> <span class="va">iter</span>] <span class="op">=</span> <span class="va">alg_iterativo</span>(<span class="va">f</span><span class="op">,</span> <span class="va">x0</span><span class="op">,</span> <span class="op">...,</span> <span class="va">tol</span><span class="op">,</span> <span class="va">max_it</span>)</span>
+<span id="cb1-4"><a href="#cb1-4" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb1-5"><a href="#cb1-5" aria-hidden="true" tabindex="-1"></a><span class="va">condiz</span> <span class="op">=</span> <span class="fl">1</span><span class="op">;</span></span>
+<span id="cb1-6"><a href="#cb1-6" aria-hidden="true" tabindex="-1"></a><span class="va">iter</span> <span class="op">=</span> <span class="fl">1</span><span class="op">;</span></span>
+<span id="cb1-7"><a href="#cb1-7" aria-hidden="true" tabindex="-1"></a><span class="va">x</span> <span class="op">=</span> <span class="va">x0</span><span class="op">;</span></span>
+<span id="cb1-8"><a href="#cb1-8" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb1-9"><a href="#cb1-9" aria-hidden="true" tabindex="-1"></a><span class="kw">while</span> <span class="va">condiz</span> <span class="op">&amp;&amp;</span> (<span class="va">iter</span><span class="op">&lt;</span><span class="va">max_it</span>)</span>
+<span id="cb1-10"><a href="#cb1-10" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb1-11"><a href="#cb1-11" aria-hidden="true" tabindex="-1"></a>    <span class="co">% aggiorno x a partire da x0, usando f e gli input ...</span></span>
+<span id="cb1-12"><a href="#cb1-12" aria-hidden="true" tabindex="-1"></a>    <span class="co">% aggiorno condizione di convergenza</span></span>
+<span id="cb1-13"><a href="#cb1-13" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb1-14"><a href="#cb1-14" aria-hidden="true" tabindex="-1"></a>    <span class="va">x0</span> <span class="op">=</span> <span class="va">x</span><span class="op">;</span> <span class="co">% aggiorno l&#39;iterata iter-esima</span></span>
+<span id="cb1-15"><a href="#cb1-15" aria-hidden="true" tabindex="-1"></a>    <span class="va">iter</span> <span class="op">=</span> <span class="va">iter</span><span class="op">+</span><span class="fl">1</span><span class="op">;</span></span>
+<span id="cb1-16"><a href="#cb1-16" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb1-17"><a href="#cb1-17" aria-hidden="true" tabindex="-1"></a><span class="kw">end</span></span></code></pre></div>
+</section></section>
+<section>
+<section id="il-metodo-di-bisezione" class="title-slide slide level1">
+<h1>Il metodo di bisezione</h1>
+
+</section>
+<section id="section-1" class="slide level2">
+<h2></h2>
+<p>Il metodo di bisezione si basa sul teorema di esistenza degli zeri,
+usando una sua dimostrazione costruttiva come punto di partenza.
+Intuitivamente: se <span class="math inline">\(f(a)&lt;0 \text{ e }
+f(b)&gt;0\)</span> ed <span class="math inline">\(f\)</span> è continua,
+deve esistere almeno uno zero in <span
+class="math inline">\([a,b]\)</span>.</p>
+</section>
+<section id="section-2" class="slide level2">
+<h2></h2>
+<p>[fonte: wikipedia]</p>
+<p><img
+data-src="https://upload.wikimedia.org/wikipedia/commons/d/d9/Bisection_anime.gif" /></p>
+</section>
+<section id="section-3" class="slide level2">
+<h2></h2>
+<div class="sourceCode" id="cb2"><pre
+class="sourceCode matlab"><code class="sourceCode matlab"><span id="cb2-1"><a href="#cb2-1" aria-hidden="true" tabindex="-1"></a><span class="kw">function</span> [<span class="va">x</span><span class="op">,</span><span class="va">iter</span>] <span class="op">=</span> <span class="va">bisection</span>(<span class="va">f</span><span class="op">,</span><span class="va">a</span><span class="op">,</span><span class="va">b</span><span class="op">,</span><span class="va">tol</span><span class="op">,</span><span class="va">max_it</span>)</span>
+<span id="cb2-2"><a href="#cb2-2" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb2-3"><a href="#cb2-3" aria-hidden="true" tabindex="-1"></a><span class="va">condiz</span><span class="op">=</span><span class="fl">1</span><span class="op">;</span> <span class="va">iter</span><span class="op">=</span><span class="fl">0</span><span class="op">;</span> <span class="va">x</span><span class="op">=</span><span class="va">a</span><span class="op">;</span></span>
+<span id="cb2-4"><a href="#cb2-4" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb2-5"><a href="#cb2-5" aria-hidden="true" tabindex="-1"></a><span class="kw">while</span> <span class="va">condiz</span> <span class="op">&amp;&amp;</span> (<span class="va">iter</span><span class="op">&lt;</span><span class="va">max_it</span>)</span>
+<span id="cb2-6"><a href="#cb2-6" aria-hidden="true" tabindex="-1"></a>    <span class="va">c</span><span class="op">=</span>(<span class="va">a</span><span class="op">+</span><span class="va">b</span>)<span class="op">/</span><span class="fl">2</span><span class="op">;</span></span>
+<span id="cb2-7"><a href="#cb2-7" aria-hidden="true" tabindex="-1"></a>    <span class="kw">if</span> <span class="va">f</span>(<span class="va">c</span>)<span class="op">==</span><span class="fl">0</span></span>
+<span id="cb2-8"><a href="#cb2-8" aria-hidden="true" tabindex="-1"></a>        <span class="va">x</span><span class="op">=</span><span class="va">c</span><span class="op">;</span> <span class="kw">return</span><span class="op">;</span></span>
+<span id="cb2-9"><a href="#cb2-9" aria-hidden="true" tabindex="-1"></a>    <span class="kw">elseif</span> <span class="va">f</span>(<span class="va">c</span>)<span class="op">*</span><span class="va">f</span>(<span class="va">a</span>)<span class="op">&lt;</span><span class="fl">0</span></span>
+<span id="cb2-10"><a href="#cb2-10" aria-hidden="true" tabindex="-1"></a>        <span class="va">b</span><span class="op">=</span><span class="va">c</span><span class="op">;</span></span>
+<span id="cb2-11"><a href="#cb2-11" aria-hidden="true" tabindex="-1"></a>    <span class="kw">elseif</span> <span class="va">f</span>(<span class="va">c</span>)<span class="op">*</span><span class="va">f</span>(<span class="va">b</span>)<span class="op">&lt;</span><span class="fl">0</span></span>
+<span id="cb2-12"><a href="#cb2-12" aria-hidden="true" tabindex="-1"></a>        <span class="va">a</span><span class="op">=</span><span class="va">c</span><span class="op">;</span></span>
+<span id="cb2-13"><a href="#cb2-13" aria-hidden="true" tabindex="-1"></a>    <span class="kw">end</span></span>
+<span id="cb2-14"><a href="#cb2-14" aria-hidden="true" tabindex="-1"></a>    <span class="va">condiz</span> <span class="op">=</span> <span class="va">abs</span>(<span class="va">f</span>(<span class="va">c</span>))<span class="op">&gt;</span><span class="va">tol</span><span class="op">;</span></span>
+<span id="cb2-15"><a href="#cb2-15" aria-hidden="true" tabindex="-1"></a>    <span class="va">x</span><span class="op">=</span><span class="va">c</span><span class="op">;</span> <span class="va">iter</span><span class="op">=</span><span class="va">iter</span><span class="op">+</span><span class="fl">1</span><span class="op">;</span></span>
+<span id="cb2-16"><a href="#cb2-16" aria-hidden="true" tabindex="-1"></a><span class="kw">end</span></span></code></pre></div>
+</section>
+<section id="ipotesi-per-la-convergenza" class="slide level2">
+<h2>Ipotesi per la convergenza</h2>
+<p>Per avere garantita la convergenza ad un’unica radice, devo
+individuare un’<strong>intervallo di confidenza</strong> <span
+class="math inline">\([a,b]\)</span> tale che:</p>
+<ul>
+<li><span class="math inline">\(f(a)f(b)&lt;0\)</span></li>
+<li><span class="math inline">\(f\)</span> sia monotona in <span
+class="math inline">\([a,b]\)</span>.</li>
+</ul>
+</section>
+<section id="esercizio-risolto" class="slide level2">
+<h2>Esercizio risolto</h2>
+<p>Trovare i valori per cui il coseno è uguale al suo argomento con il
+metodo di bisezione.</p>
+</section>
+<section id="esercizi" class="slide level2">
+<h2>Esercizi</h2>
+<ol type="1">
+<li>Trovare i valori per cui la cui tangente è uguale al suo argomento
+con il metodo di bisezione, aiutandosi con i grafici e individuando un
+intervallo di confidenza.</li>
+</ol>
+</section></section>
+<section>
+<section id="metodi-di-punto-fisso" class="title-slide slide level1">
+<h1>Metodi di punto fisso</h1>
+
+</section>
+<section id="section-4" class="slide level2">
+<h2></h2>
+<p>I metodi di punto fisso per la ricerca di zeri di funzione consistono
+nel trovare a partire dal problema <span
+class="math inline">\(x^*\;\text{ t.c. }\; f(x^*) = 0\)</span> un
+problema equivalente <span class="math inline">\(x^*\;\text{ t.c. }\;
+g(x^*) = x^*\)</span> e applicare lo schema iterativo <span
+class="math display">\[x_{n+1} = g(x_n)\]</span> ovvero <span
+class="math display">\[x_{n+1} = g^{[n+1]}(x_0).\]</span></p>
+</section>
+<section id="section-5" class="slide level2">
+<h2></h2>
+<p>Le funzioni di punto fisso a partire da <span
+class="math inline">\(f\)</span> sono infinite, ad esempio</p>
+<ul>
+<li><span class="math inline">\(g(x) = f(x) + x\)</span></li>
+<li><span class="math inline">\(g(x) = f(x)^n +x\)</span> per qualsiasi
+<span class="math inline">\(n\in\mathbb{Z}\)</span></li>
+<li><span class="math inline">\(g(x) = (f(x) + 1)x\)</span></li>
+</ul>
+<p>ma non tutte sono utili….</p>
+</section>
+<section id="condizioni-di-convergenza" class="slide level2">
+<h2>Condizioni di convergenza</h2>
+<p>Per avere garanzia di convergenza, occorre che esista un intorno
+della radice <span class="math inline">\(\mathcal{U}_{x^*}\)</span> tale
+che <span class="math inline">\(|g&#39;(x)|\leq\gamma&lt;1\)</span> per
+ogni <span class="math inline">\(x\in \mathcal{U}_{x^*}\)</span>. In
+questi casi la funzione di iterazione <span
+class="math inline">\(g\)</span> si chiama <strong>contrazione</strong>.
+Se scelgo <span class="math inline">\(x_0\)</span> nell’intorno
+predetto, sono sicuro di arrivare a convergenza.</p>
+</section>
+<section id="section-6" class="slide level2">
+<h2></h2>
+<p>[fonte: wikipedia]</p>
+<p><img
+data-src="https://upload.wikimedia.org/wikipedia/commons/4/49/Fixed_point_anime.gif" /></p>
+</section>
+<section id="creiamo-insieme-la-funzione-a-partire-dal-template"
+class="slide level2">
+<h2>Creiamo insieme la funzione a partire dal template</h2>
+<div class="sourceCode" id="cb3"><pre
+class="sourceCode matlab"><code class="sourceCode matlab"><span id="cb3-1"><a href="#cb3-1" aria-hidden="true" tabindex="-1"></a><span class="co">% struttura generale di un algoritmo iterativo</span></span>
+<span id="cb3-2"><a href="#cb3-2" aria-hidden="true" tabindex="-1"></a><span class="co">% per la ricerca di zeri di funzione</span></span>
+<span id="cb3-3"><a href="#cb3-3" aria-hidden="true" tabindex="-1"></a><span class="kw">function</span> [<span class="va">x</span><span class="op">,</span> <span class="va">iter</span>] <span class="op">=</span> <span class="va">alg_iterativo</span>(<span class="va">f</span><span class="op">,</span> <span class="va">x0</span><span class="op">,</span> <span class="op">...,</span> <span class="va">tol</span><span class="op">,</span> <span class="va">max_it</span>)</span>
+<span id="cb3-4"><a href="#cb3-4" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb3-5"><a href="#cb3-5" aria-hidden="true" tabindex="-1"></a><span class="va">condiz</span> <span class="op">=</span> <span class="fl">1</span><span class="op">;</span></span>
+<span id="cb3-6"><a href="#cb3-6" aria-hidden="true" tabindex="-1"></a><span class="va">iter</span> <span class="op">=</span> <span class="fl">1</span><span class="op">;</span></span>
+<span id="cb3-7"><a href="#cb3-7" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb3-8"><a href="#cb3-8" aria-hidden="true" tabindex="-1"></a><span class="kw">while</span> <span class="va">condiz</span> <span class="op">&amp;&amp;</span> (<span class="va">iter</span><span class="op">&lt;</span><span class="va">max_it</span>)</span>
+<span id="cb3-9"><a href="#cb3-9" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb3-10"><a href="#cb3-10" aria-hidden="true" tabindex="-1"></a>    <span class="co">% aggiorno x a partire da x0, usando f e gli input ...</span></span>
+<span id="cb3-11"><a href="#cb3-11" aria-hidden="true" tabindex="-1"></a>    <span class="co">% aggiorno condizione di convergenza</span></span>
+<span id="cb3-12"><a href="#cb3-12" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb3-13"><a href="#cb3-13" aria-hidden="true" tabindex="-1"></a>    <span class="va">x0</span> <span class="op">=</span> <span class="va">x</span><span class="op">;</span> <span class="co">% aggiorno l&#39;iterata iter-esima</span></span>
+<span id="cb3-14"><a href="#cb3-14" aria-hidden="true" tabindex="-1"></a>    <span class="va">iter</span> <span class="op">=</span> <span class="va">iter</span><span class="op">+</span><span class="fl">1</span><span class="op">;</span></span>
+<span id="cb3-15"><a href="#cb3-15" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb3-16"><a href="#cb3-16" aria-hidden="true" tabindex="-1"></a><span class="kw">end</span></span></code></pre></div>
+</section>
+<section id="section-7" class="slide level2">
+<h2></h2>
+<div class="sourceCode" id="cb4"><pre
+class="sourceCode matlab"><code class="sourceCode matlab"><span id="cb4-1"><a href="#cb4-1" aria-hidden="true" tabindex="-1"></a><span class="kw">function</span> [<span class="va">x</span><span class="op">,</span> <span class="va">iter</span>] <span class="op">=</span> <span class="va">punto_fisso</span>(<span class="va">g</span><span class="op">,</span> <span class="va">x0</span><span class="op">,</span> <span class="va">tol</span><span class="op">,</span> <span class="va">max_it</span>)</span>
+<span id="cb4-2"><a href="#cb4-2" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb4-3"><a href="#cb4-3" aria-hidden="true" tabindex="-1"></a><span class="va">condiz</span> <span class="op">=</span> <span class="fl">1</span><span class="op">;</span></span>
+<span id="cb4-4"><a href="#cb4-4" aria-hidden="true" tabindex="-1"></a><span class="va">iter</span> <span class="op">=</span> <span class="fl">1</span><span class="op">;</span></span>
+<span id="cb4-5"><a href="#cb4-5" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb4-6"><a href="#cb4-6" aria-hidden="true" tabindex="-1"></a><span class="kw">while</span> <span class="va">condiz</span> <span class="op">&amp;&amp;</span> (<span class="va">iter</span><span class="op">&lt;</span><span class="va">max_it</span>)</span>
+<span id="cb4-7"><a href="#cb4-7" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb4-8"><a href="#cb4-8" aria-hidden="true" tabindex="-1"></a>    <span class="va">x</span><span class="op">=</span><span class="va">g</span>(<span class="va">x0</span>)<span class="op">;</span></span>
+<span id="cb4-9"><a href="#cb4-9" aria-hidden="true" tabindex="-1"></a>    <span class="va">condiz</span> <span class="op">=</span> <span class="va">abs</span>(<span class="va">x</span><span class="op">-</span><span class="va">x0</span>) <span class="op">&gt;=</span> <span class="va">tol</span> <span class="op">*</span> <span class="va">abs</span>(<span class="va">x</span>)<span class="op">;</span></span>
+<span id="cb4-10"><a href="#cb4-10" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb4-11"><a href="#cb4-11" aria-hidden="true" tabindex="-1"></a>    <span class="va">x0</span> <span class="op">=</span> <span class="va">x</span><span class="op">;</span></span>
+<span id="cb4-12"><a href="#cb4-12" aria-hidden="true" tabindex="-1"></a>    <span class="va">iter</span> <span class="op">=</span> <span class="va">iter</span><span class="op">+</span><span class="fl">1</span><span class="op">;</span></span>
+<span id="cb4-13"><a href="#cb4-13" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb4-14"><a href="#cb4-14" aria-hidden="true" tabindex="-1"></a><span class="kw">end</span></span></code></pre></div>
+</section>
+<section id="esercizio-guidato" class="slide level2">
+<h2>Esercizio guidato</h2>
+<p>Trovare uno zero della funzione <span class="math inline">\(f(x) =
+cos(x^2)- x\)</span>, usando una funzione di iterazione convergente;
+studiarne la convergenza.</p>
+</section>
+<section id="esercizi-1" class="slide level2">
+<h2>Esercizi</h2>
+<ol type="1">
+<li>Trovare uno zero della funzione <span class="math inline">\(f(x) =
+tan(x)- x^2+1\)</span>, usando più funzioni di iterazione e
+confrontandone la convergenza.</li>
+<li>Trovare un metodo iterativo di punto fisso convergente per trovare
+la radice positiva di minimo modulo di <span class="math inline">\(f(x)
+= \cos(2x) - e^{x-2}\)</span>,</li>
+</ol>
+</section></section>
+<section>
+<section id="il-metodo-di-newton" class="title-slide slide level1">
+<h1>Il metodo di Newton</h1>
+
+</section>
+<section id="section-8" class="slide level2">
+<h2></h2>
+<p>Il metodo di Newton origina dallo sviluppo di Taylor al primo ordine.
+Tralasciando il resto in</p>
+<p><span class="math display">\[ f(x) = f(x_0) + f&#39;(x_0) (x-x_0)
++\mathcal{O}((x-x_0)^2)\]</span> con <span class="math inline">\(f(x)
+=0\)</span> ottengo</p>
+<p><span class="math display">\[x - x_0 = -\frac{f(x_0)}{f&#39;(x_0)}
+\]</span></p>
+<p>da cui la successione per ricorrenza (o <strong>schema
+iterativo</strong>)</p>
+<p><span class="math display">\[x_{n+1} = x_n -
+\frac{f(x_n)}{f&#39;(x_n)}.\]</span></p>
+</section>
+<section id="section-9" class="slide level2">
+<h2></h2>
+<p>[fonte:wikipedia]</p>
+<p><img
+data-src="https://upload.wikimedia.org/wikipedia/commons/e/e0/NewtonIteration_Ani.gif" /></p>
+<p><a href="https://www.youtube.com/watch?v=u9y-5xBApBU"></a></p>
+</section>
+<section id="section-10" class="slide level2">
+<h2></h2>
+<div class="sourceCode" id="cb5"><pre
+class="sourceCode matlab"><code class="sourceCode matlab"><span id="cb5-1"><a href="#cb5-1" aria-hidden="true" tabindex="-1"></a><span class="kw">function</span> [<span class="va">x</span><span class="op">,</span><span class="va">iter</span>] <span class="op">=</span> <span class="va">newton</span>(<span class="va">f</span><span class="op">,</span><span class="va">fp</span><span class="op">,</span><span class="va">x0</span><span class="op">,</span><span class="va">tol</span><span class="op">,</span><span class="va">max_it</span>)</span>
+<span id="cb5-2"><a href="#cb5-2" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb5-3"><a href="#cb5-3" aria-hidden="true" tabindex="-1"></a><span class="va">condiz</span> <span class="op">=</span> <span class="fl">1</span><span class="op">;</span> <span class="va">iter</span><span class="op">=</span><span class="fl">0</span><span class="op">;</span></span>
+<span id="cb5-4"><a href="#cb5-4" aria-hidden="true" tabindex="-1"></a><span class="kw">while</span> <span class="va">condiz</span> <span class="op">&amp;&amp;</span> (<span class="va">iter</span><span class="op">&lt;</span><span class="va">max_it</span>)</span>
+<span id="cb5-5"><a href="#cb5-5" aria-hidden="true" tabindex="-1"></a>    <span class="va">x</span> <span class="op">=</span> <span class="va">x0</span><span class="op">-</span><span class="va">f</span>(<span class="va">x0</span>)<span class="op">/</span><span class="va">fp</span>(<span class="va">x0</span>)<span class="op">;</span></span>
+<span id="cb5-6"><a href="#cb5-6" aria-hidden="true" tabindex="-1"></a>    <span class="va">condiz</span> <span class="op">=</span> <span class="va">abs</span>(<span class="va">f</span>(<span class="va">x</span>))<span class="op">&gt;</span><span class="va">tol</span><span class="op">;</span></span>
+<span id="cb5-7"><a href="#cb5-7" aria-hidden="true" tabindex="-1"></a>    <span class="va">iter</span><span class="op">=</span><span class="va">iter</span><span class="op">+</span><span class="fl">1</span><span class="op">;</span> <span class="va">x0</span><span class="op">=</span><span class="va">x</span><span class="op">;</span></span>
+<span id="cb5-8"><a href="#cb5-8" aria-hidden="true" tabindex="-1"></a><span class="kw">end</span></span></code></pre></div>
+</section>
+<section id="ipotesi-per-la-convergenza-1" class="slide level2">
+<h2>Ipotesi per la convergenza</h2>
+<p>Per avere garantita la convergenza ad un’unica radice deve esistere
+un intorno della radice <span
+class="math inline">\(\mathcal{U}_{x^*}\)</span> in cui la funzione
+<span class="math inline">\(f\)</span> è <strong>strettamente
+monotona</strong>. Il punto di partenza deve essere scelto in tale
+intorno <span class="math inline">\(x_0\in
+\mathcal{U}_{x^*}\)</span>.</p>
+</section>
+<section id="esercizio-risolto-1" class="slide level2">
+<h2>Esercizio risolto</h2>
+<p>Stesso esercizio di prima con Newton e studio della velocità di
+convergenza.</p>
+</section>
+<section id="netwon-per-radici-multiple" class="slide level2">
+<h2>Netwon per radici multiple</h2>
+<p>Abbiamo visto che se <span class="math inline">\(f\)</span> è
+monotona nell’intorno di <span class="math inline">\(x^*\)</span>
+contenente <span class="math inline">\(x_0\)</span> di sicuro il metodo
+di Newton converge con ordine <span class="math inline">\(2\)</span>. Ma
+cosa succede se le derivate di <span class="math inline">\(f\)</span>
+sono nulle proprio nella sua radice? In questo caso per garantire la
+convergenza di secondo ordine basta usare il metodo di Newton
+modificato. Sia <span class="math inline">\(m\)</span> la molteplicità
+della radice <span class="math inline">\(x^*\)</span> di <span
+class="math inline">\(f\)</span> ossìa <span class="math display">\[
+f^{(k)}(x^*) = 0 \;\;\;\forall k=0, \ldots, m\]</span> allora per
+stimare <span class="math inline">\(x^*\)</span> si usa:</p>
+<p><span class="math display">\[x_{n+1} = x_n -
+m\frac{f(x_n)}{f&#39;(x_n)}\]</span></p>
+</section>
+<section id="esercizi-2" class="slide level2">
+<h2>Esercizi</h2>
+<ol type="1">
+<li>Utilizzare il file <code>newton.m</code> come base per una funzione
+<code>newton_mod.m</code> che implementi il metodo di Newton modificato
+per il calcolo di radici a molteplicità <span
+class="math inline">\(m\)</span>. Confrontare la convergenza dei due
+metodi sulla ricerca dello zero di <span class="math inline">\(f(x) =
+(x-3)^2\)</span>.</li>
+<li>Trovare gli zeri positivi della funzione <span
+class="math inline">\(f(x) = 3\cos(x) - e^{-x}\)</span>, con il metodo
+di bisezione e Newton e confrontare gli ordini di convergenza.</li>
+</ol>
+</section></section>
+<section>
+<section id="i-test-di-arresto" class="title-slide slide level1">
+<h1>I test di arresto</h1>
+
+</section>
+<section id="section-11" class="slide level2">
+<h2></h2>
+<p>Non conoscendo in genere <span class="math inline">\(x^*\)</span>, lo
+zero della funzione data, non posso utilizzare l’errore relativo o
+assoluto come test di arresto. <span class="math display">\[err =
+\frac{|x_k - x^*|}{|x^*|}.\]</span></p>
+<p>Dobbiamo quindi affidarci ad altri metodi per ottenere una condizione
+di uscita dal <code>while</code> del nostro metodo.</p>
+</section>
+<section id="il-residuo" class="slide level2">
+<h2>Il residuo</h2>
+<p>Come metodo <em>naif</em> e intuitivo finora abbiamo usato il
+residuo. Ci accontentiamo quindi di trovare un valore per cui la
+funzione abbia valore <em>basso</em> in valore assoluto, ossia <span
+class="math inline">\(|f(x_k)| \leq t\)</span> con <span
+class="math inline">\(t\)</span> la tolleranza fissata. In Matlab
+abbiamo scritto <code>condiz = abs(f(x)) &gt; tol</code>. In alcune
+situazioni però questa condizione di arresto può dare dei problemi, ad
+esempio:</p>
+<ul>
+<li>quando la funzione è <strong>troppo piatta</strong> nei dintorni
+della radice mi fermo <strong>troppo presto</strong>. &gt;Esempio: se
+<span class="math inline">\(f(x) = 10^{-15} x\)</span> allora <span
+class="math inline">\(|f(100)| = 10^{-13} &lt;t\)</span> ma <span
+class="math inline">\(x=100\)</span> è ben lontana da 0.</li>
+<li>quando la funzione è <strong>troppo ripida</strong> nei dintorni
+della radice mi fermo dopo aver speso <strong>troppe
+iterazioni</strong>. &gt;Esempio: <span class="math inline">\(f(x) =
+10^{50} x\)</span> il punto <span
+class="math inline">\(x_k=10^{-20}\)</span> è molto vicino alla radice,
+ma <span class="math inline">\(f(x_k) = 10^{30}\)</span>.</li>
+</ul>
+</section>
+<section id="il-residuo-pesato" class="slide level2">
+<h2>Il residuo pesato</h2>
+<p>Per ovviare ai problemi appena esposti si può scegliere di usare il
+<strong>residuo pesato</strong> <span class="math display">\[ |f(x_k) w|
+= \left|f(x_k) \frac{b-a}{f(b)-f(a)}\right| \leq t \]</span> con <span
+class="math inline">\([a,b]\)</span> l’intervallo di confidenza
+scelto.</p>
+<p>Infatti:</p>
+<ul>
+<li>se <span class="math inline">\(f(x) = 10^{-15} x\)</span> in <span
+class="math inline">\([0,1]\)</span> allora <span
+class="math inline">\(|f(100) w| = 10^{2}\)</span> e vado avanti.</li>
+<li><span class="math inline">\(f(x) = 10^{50} x\)</span> in <span
+class="math inline">\([0,1]\)</span> allora <span
+class="math inline">\(|f(10^{-20}) w| = 10^{-20}\)</span> e mi fermo ben
+prima.</li>
+</ul>
+<p>In Matlab uso <code>condiz = abs(f(x)*w)&gt;tol</code> con
+<code>w</code> definito precedentemente (prima o dentro il
+<code>while</code>) come <code>w = ( b-a )/(f(b) - f(a))</code>.</p>
+</section>
+<section id="lo-scarto-assoluto" class="slide level2">
+<h2>Lo scarto assoluto</h2>
+<p>Anche il residuo pesato ha le sue limitazioni, una per tutte: non
+riesco a controllare il numero di cifre significative. Sul valore che
+sto per <em>vendere</em> come radice di <span
+class="math inline">\(f\)</span> voglio conoscere per tempo la
+tolleranza (assoluta o relativa).</p>
+<p>Definiamo allora lo <strong>scarto relativo</strong> come
+un’approssimazione sempre migliore dell’errore relativo</p>
+<p><span class="math display">\[|x_{k+1} - x_{k}| \leq t\]</span></p>
+<p>che in Matlab si traduce così:</p>
+<div class="sourceCode" id="cb6"><pre
+class="sourceCode matlab"><code class="sourceCode matlab"><span id="cb6-1"><a href="#cb6-1" aria-hidden="true" tabindex="-1"></a>  <span class="va">condiz</span> <span class="op">=</span> <span class="va">abs</span>(<span class="va">x</span> <span class="op">-</span> <span class="va">x0</span>)<span class="op">&gt;</span><span class="va">tol</span></span></code></pre></div>
+</section>
+<section id="lo-scarto-relativo" class="slide level2">
+<h2>Lo scarto relativo</h2>
+<p>Per controllare il numero di cifre significative in termini assoluti
+si può ricorrere allo scarto relativo <span
+class="math display">\[\frac{|x_{k+1} - x_{k}|}{|x_k|} \leq
+t\]</span></p>
+<p>che in Matlab per questioni di stabilità numerica si scrive</p>
+<div class="sourceCode" id="cb7"><pre
+class="sourceCode matlab"><code class="sourceCode matlab"><span id="cb7-1"><a href="#cb7-1" aria-hidden="true" tabindex="-1"></a>  <span class="va">condiz</span> <span class="op">=</span> <span class="va">abs</span>(<span class="va">x</span> <span class="op">-</span> <span class="va">x0</span>) <span class="op">&gt;</span> <span class="va">tol</span> <span class="op">*</span> <span class="va">abs</span>(<span class="va">x0</span>)</span></code></pre></div>
+</section></section>
+<section>
+<section id="ordine-di-convergenza" class="title-slide slide level1">
+<h1>Ordine di convergenza</h1>
+
+</section>
+<section id="section-12" class="slide level2">
+<h2></h2>
+<p>In genere un metodo di punto fisso ha convergenza
+<strong>lineare</strong>; tuttavia se tutte le sue derivate <span
+class="math display">\[g^{(1)}(x^*)=\ldots=g^{(p-1)}(x^*)=0\]</span>
+allora l’ordine di convergenza è <span
+class="math inline">\(p\)</span>.</p>
+</section>
+<section id="newton-come-metodo-di-punto-fisso" class="slide level2">
+<h2>Newton come metodo di punto fisso</h2>
+<p>Il metodo di Newton rientra nei metodi di punto fisso; infatti basta
+imporre come funzione d’iterazione</p>
+<p><span class="math display">\[ g(x) = x-
+\frac{f(x)}{f&#39;(x)}.\]</span></p>
+<p>La sua funzione di iterazione ha derivata <span
+class="math display">\[ g&#39;(x) =
+\frac{f(x)f&#39;&#39;(x)}{f&#39;(x)^2}\]</span> che si annulla nella
+radice, quindi la convergenza è quadratica.</p>
+</section>
+<section id="esempio-limite" class="slide level2">
+<h2>Esempio limite</h2>
+<p>Stimare lo zero di minor modulo della funzione <span
+class="math inline">\(f(x) = x^2 - (\alpha - 1)x - \alpha\)</span> con
+<span class="math inline">\(\alpha = 3.0001\)</span> usando la funzione
+di iterazione <span class="math inline">\(g(x) = \frac{\alpha -
+x^2}{\alpha -1}\)</span>.</p>
+</section>
+<section id="section-13" class="slide level2">
+<h2></h2>
+<div class="sourceCode" id="cb8"><pre
+class="sourceCode matlab"><code class="sourceCode matlab"><span id="cb8-1"><a href="#cb8-1" aria-hidden="true" tabindex="-1"></a><span class="va">clear</span><span class="op">;</span> <span class="va">close</span></span>
+<span id="cb8-2"><a href="#cb8-2" aria-hidden="true" tabindex="-1"></a><span class="va">a</span> <span class="op">=</span> <span class="fl">3.0001</span><span class="op">;</span></span>
+<span id="cb8-3"><a href="#cb8-3" aria-hidden="true" tabindex="-1"></a><span class="va">f</span> <span class="op">=</span> <span class="op">@</span>(<span class="va">x</span>) <span class="va">x</span><span class="op">.^</span><span class="fl">2</span> <span class="op">+</span> (<span class="va">a</span><span class="op">-</span><span class="fl">1</span>)<span class="op">*</span><span class="va">x</span> <span class="op">-</span><span class="va">a</span><span class="op">;</span></span>
+<span id="cb8-4"><a href="#cb8-4" aria-hidden="true" tabindex="-1"></a><span class="va">x</span> <span class="op">=</span> <span class="va">linspace</span>(<span class="op">-</span><span class="fl">2</span><span class="op">,</span><span class="fl">2</span>)<span class="op">;</span></span>
+<span id="cb8-5"><a href="#cb8-5" aria-hidden="true" tabindex="-1"></a><span class="va">figure</span>()</span>
+<span id="cb8-6"><a href="#cb8-6" aria-hidden="true" tabindex="-1"></a><span class="va">plot</span>(<span class="va">x</span><span class="op">,</span> <span class="va">f</span>(<span class="va">x</span>))<span class="op">;</span> <span class="va">grid</span></span>
+<span id="cb8-7"><a href="#cb8-7" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb8-8"><a href="#cb8-8" aria-hidden="true" tabindex="-1"></a><span class="va">g</span> <span class="op">=</span> <span class="op">@</span>(<span class="va">x</span>) (<span class="va">a</span><span class="op">-</span><span class="va">x</span><span class="op">.^</span><span class="fl">2</span>)<span class="op">/</span>(<span class="va">a</span><span class="op">-</span><span class="fl">1</span>)<span class="op">;</span></span>
+<span id="cb8-9"><a href="#cb8-9" aria-hidden="true" tabindex="-1"></a><span class="va">gp</span> <span class="op">=</span> <span class="op">@</span>(<span class="va">x</span>) <span class="op">-</span><span class="fl">2</span><span class="op">/</span>(<span class="va">a</span><span class="op">-</span><span class="fl">1</span>) <span class="op">*</span> <span class="va">x</span><span class="op">;</span></span>
+<span id="cb8-10"><a href="#cb8-10" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb8-11"><a href="#cb8-11" aria-hidden="true" tabindex="-1"></a>[<span class="va">x_</span><span class="op">,</span> <span class="va">iter</span><span class="op">,</span> <span class="va">res</span>] <span class="op">=</span> <span class="va">punto_fisso</span>(<span class="va">g</span><span class="op">,</span> <span class="op">-</span><span class="fl">.8</span><span class="op">,</span> <span class="fl">1</span>.<span class="va">e</span><span class="op">-</span><span class="fl">4</span><span class="op">,</span> <span class="fl">1</span>.<span class="va">e5</span>)<span class="op">;</span></span>
+<span id="cb8-12"><a href="#cb8-12" aria-hidden="true" tabindex="-1"></a><span class="va">figure</span>()</span>
+<span id="cb8-13"><a href="#cb8-13" aria-hidden="true" tabindex="-1"></a><span class="va">semilogy</span>(<span class="va">res</span><span class="op">,</span> <span class="ss">&#39;b.-&#39;</span>)</span>
+<span id="cb8-14"><a href="#cb8-14" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb8-15"><a href="#cb8-15" aria-hidden="true" tabindex="-1"></a><span class="va">p</span> <span class="op">=</span> <span class="va">log</span>(<span class="va">res</span>(<span class="kw">end</span>))<span class="op">/</span><span class="va">log</span>(<span class="va">res</span>(<span class="kw">end</span><span class="op">-</span><span class="fl">1</span>))</span></code></pre></div>
+</section>
+<section id="esecizio" class="slide level2">
+<h2>Esecizio</h2>
+<p>Trovare tre diversi metodi iterativi gli zeri positivi della funzione
+<span class="math inline">\(f(x) = x^2 - \log(x^2 +2)\)</span>. Fare
+predizioni sul numero di iterate necessarie e l’ordine di convergenza.
+Testare i metodi partendo dallo stesso punto iniziale <span
+class="math inline">\(x_0\)</span> e approssimando la radice 11 cifre
+significative.</p>
+</section>
+<section id="esercizi-3" class="slide level2">
+<h2>Esercizi</h2>
+<ol type="1">
+<li>Trovare gli zeri positivi di <span class="math inline">\(f(x) =
+\log(1/x) - x^2\)</span> usando due metodi di punto fisso convergenti.
+Studiare e confrontare la convergenza dei due metodi.</li>
+</ol>
+</section>
+<section id="section-14" class="slide level2">
+<h2></h2>
+<p>Es 2. <strong>[A gruppi]</strong> Trovare gli zeri della funzione
+<span class="math inline">\(f(x) = x^2 +\log(x)\)</span> con 4 diversi
+metodi iterativi di punto fisso partendo dallo stesso punto iniziale
+<span class="math inline">\(x_0\)</span> e con 12 cifre
+significative.</p>
+<ul>
+<li>Formulare delle ipotesi sulla convergenza dei diversi metodi prima
+di farli girare: il metodo converge o meno, quale l’ordine di arrivo,
+con che ordine, con che pendenza, quante le iterazioni richieste;</li>
+<li>Eseguire i metodi iterativi proposti;</li>
+<li>Verificare le ipotesi e commentare alla luce dei risultati di teoria
+studiati.</li>
+</ul>
+</section>
+<section id="section-15" class="slide level2">
+<h2></h2>
+<ol start="3" type="1">
+<li><strong>[Opzionale]</strong> Implementare in una function il metodo
+delle secanti <span class="math inline">\(x_{k+1}= x_k - f(x_k)\frac{x_k
+- x_{k-1}}{f(x_k) - f(x_{k-1})}\)</span> e fare un test sulla funzione
+dell’esercizio precedente. Il metodo delle secanti può essere scritto
+come iterazione di punto fisso? Qual è il suo ordine di convergenza?
+[<span class="math inline">\(\frac{1+\sqrt{5}}{2}\)</span>]</li>
+<li><strong>[Opzionale]</strong> Implementare in una function il metodo
+delle corde <span class="math inline">\(x_{k+1}= x_k -
+\frac{f(x_k)}{c}\)</span> e fare un test sulla funzione dell’esercizio
+precedente. Il metodo delle secanti può essere scritto come iterazione
+di punto fisso? Qual è il suo ordine di convergenza?</li>
+</ol>
+</section></section>
+    </div>
+  </div>
+
+  <script src="https://unpkg.com/reveal.js/dist/reveal.js"></script>
+
+  <!-- reveal.js plugins -->
+  <script src="https://unpkg.com/reveal.js/plugin/notes/notes.js"></script>
+  <script src="https://unpkg.com/reveal.js/plugin/search/search.js"></script>
+  <script src="https://unpkg.com/reveal.js/plugin/zoom/zoom.js"></script>
+  <script src="https://unpkg.com/reveal.js/plugin/math/math.js"></script>
+
+  <script>
+
+      // Full list of configuration options available at:
+      // https://revealjs.com/config/
+      Reveal.initialize({
+        // Display controls in the bottom right corner
+        controls: true,
+
+        // Help the user learn the controls by providing hints, for example by
+        // bouncing the down arrow when they first encounter a vertical slide
+        controlsTutorial: true,
+
+        // Determines where controls appear, "edges" or "bottom-right"
+        controlsLayout: 'bottom-right',
+
+        // Visibility rule for backwards navigation arrows; "faded", "hidden"
+        // or "visible"
+        controlsBackArrows: 'faded',
+
+        // Display a presentation progress bar
+        progress: true,
+
+        // Display the page number of the current slide
+        slideNumber: false,
+
+        // 'all', 'print', or 'speaker'
+        showSlideNumber: 'all',
+
+        // Add the current slide number to the URL hash so that reloading the
+        // page/copying the URL will return you to the same slide
+        hash: true,
+
+        // Start with 1 for the hash rather than 0
+        hashOneBasedIndex: false,
+
+        // Flags if we should monitor the hash and change slides accordingly
+        respondToHashChanges: true,
+
+        // Push each slide change to the browser history
+        history: false,
+
+        // Enable keyboard shortcuts for navigation
+        keyboard: true,
+
+        // Enable the slide overview mode
+        overview: true,
+
+        // Disables the default reveal.js slide layout (scaling and centering)
+        // so that you can use custom CSS layout
+        disableLayout: false,
+
+        // Vertical centering of slides
+        center: true,
+
+        // Enables touch navigation on devices with touch input
+        touch: true,
+
+        // Loop the presentation
+        loop: false,
+
+        // Change the presentation direction to be RTL
+        rtl: false,
+
+        // see https://revealjs.com/vertical-slides/#navigation-mode
+        navigationMode: 'default',
+
+        // Randomizes the order of slides each time the presentation loads
+        shuffle: false,
+
+        // Turns fragments on and off globally
+        fragments: true,
+
+        // Flags whether to include the current fragment in the URL,
+        // so that reloading brings you to the same fragment position
+        fragmentInURL: true,
+
+        // Flags if the presentation is running in an embedded mode,
+        // i.e. contained within a limited portion of the screen
+        embedded: false,
+
+        // Flags if we should show a help overlay when the questionmark
+        // key is pressed
+        help: true,
+
+        // Flags if it should be possible to pause the presentation (blackout)
+        pause: true,
+
+        // Flags if speaker notes should be visible to all viewers
+        showNotes: false,
+
+        // Global override for autoplaying embedded media (null/true/false)
+        autoPlayMedia: null,
+
+        // Global override for preloading lazy-loaded iframes (null/true/false)
+        preloadIframes: null,
+
+        // Number of milliseconds between automatically proceeding to the
+        // next slide, disabled when set to 0, this value can be overwritten
+        // by using a data-autoslide attribute on your slides
+        autoSlide: 0,
+
+        // Stop auto-sliding after user input
+        autoSlideStoppable: true,
+
+        // Use this method for navigation when auto-sliding
+        autoSlideMethod: null,
+
+        // Specify the average time in seconds that you think you will spend
+        // presenting each slide. This is used to show a pacing timer in the
+        // speaker view
+        defaultTiming: null,
+
+        // Enable slide navigation via mouse wheel
+        mouseWheel: false,
+
+        // The display mode that will be used to show slides
+        display: 'block',
+
+        // Hide cursor if inactive
+        hideInactiveCursor: true,
+
+        // Time before the cursor is hidden (in ms)
+        hideCursorTime: 5000,
+
+        // Opens links in an iframe preview overlay
+        previewLinks: false,
+
+        // Transition style (none/fade/slide/convex/concave/zoom)
+        transition: 'slide',
+
+        // Transition speed (default/fast/slow)
+        transitionSpeed: 'default',
+
+        // Transition style for full page slide backgrounds
+        // (none/fade/slide/convex/concave/zoom)
+        backgroundTransition: 'fade',
+
+        // Number of slides away from the current that are visible
+        viewDistance: 3,
+
+        // Number of slides away from the current that are visible on mobile
+        // devices. It is advisable to set this to a lower number than
+        // viewDistance in order to save resources.
+        mobileViewDistance: 2,
+
+        math: {
+          mathjax: 'http://cdn.mathjax.org/mathjax/latest/MathJax.js',
+          config: 'TeX-AMS_HTML-full',
+          tex2jax: {
+            inlineMath: [['\\(','\\)']],
+            displayMath: [['\\[','\\]']],
+            balanceBraces: true,
+            processEscapes: false,
+            processRefs: true,
+            processEnvironments: true,
+            preview: 'TeX',
+            skipTags: ['script','noscript','style','textarea','pre','code'],
+            ignoreClass: 'tex2jax_ignore',
+            processClass: 'tex2jax_process'
+          },
+        },
+
+        // reveal.js plugins
+        plugins: [
+          RevealMath,
+          RevealNotes,
+          RevealSearch,
+          RevealZoom
+        ]
+      });
+    </script>
+    </body>
+</html>
