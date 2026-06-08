@@ -8,7 +8,7 @@ format long; % Imposta la visualizzazione interna di MATLAB ad alta precisione
 g = @(x) sqrt((2 - log(x+2)) ./ x);
 
 % 2. PARAMETRI DI INPUT (Modificato x0 per evitare i numeri complessi della radice)
-x0 = 0.5;         % Punto iniziale positivo e sicuro
+x0 = 1;           % Punto iniziale positivo e sicuro
 tol = 1e-12;      % Tolleranza ad alta precisione
 max_iter = 150;    % Numero massimo di iterazioni per il grafico
 

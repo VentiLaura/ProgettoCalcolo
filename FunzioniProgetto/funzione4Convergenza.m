@@ -8,7 +8,7 @@ format long; % Imposta la visualizzazione interna di MATLAB ad alta precisione
 g = @(x) x - (x.^3 + log(x+2) - 2) ./ (3*x.^2 + 1./(x+2));
 
 % 2. PARAMETRI DI INPUT
-x0 = 0.5         % Punto iniziale
+x0 = 1;           % Punto iniziale
 tol = 1e-12;      % Tolleranza ad alta precisione
 max_iter = 150;    % Numero massimo di iterazioni per il grafico
 
