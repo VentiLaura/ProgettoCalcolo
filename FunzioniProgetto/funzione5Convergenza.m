@@ -22,8 +22,8 @@ errore = Inf;
 % 4. LOOP ITERATIVO (Sostituito con controllo di divergenza)
 % =========================================================================
 diverge = false; % Variabile bandiera (flag) per tracciare la divergenza
-
-while (errore > tol) && (iter < max_iter-1)
+condiz = abs(x - x0) > tol * abs(x0);
+while (not(condiz)) && (iter < max_iter-1)
     iter = iter + 1;
     prossimo_x = g(X(iter));
     
@@ -45,6 +45,7 @@ while (errore > tol) && (iter < max_iter-1)
     end
     
     errore = nuovo_errore;
+    condiz = abs(x - x0) > tol * abs(x0);
 end
 
 % Tagliamo i vettori alle iterazioni effettivamente calcolate

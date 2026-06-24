@@ -5,7 +5,7 @@ clear; clc; close all;
 format long; % Imposta la visualizzazione interna di MATLAB ad alta precisione
 
 % 1. DEFINIZIONE DELLA FUNZIONE g(x) (Corretto l'operatore di divisione vettoriale)
-g = @(x) sqrt((2 - log(x+2)) ./ x);
+g = @(x) ((x.^3+log(x+2)-2)*(-3/10))+x;
 
 % 2. PARAMETRI DI INPUT (Modificato x0 per evitare i numeri complessi della radice)
 x0 = 1;           % Punto iniziale positivo e sicuro
