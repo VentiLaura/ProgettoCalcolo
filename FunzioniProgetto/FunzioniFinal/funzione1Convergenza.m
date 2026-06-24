@@ -7,7 +7,7 @@ format long
 g = @(x) nthroot(-log(x+2)+2, 3);
 
 x0 = 1;
-tol = 1.e-12;
+tol = 1.e-12; % controllo se è sbagliata
 max_it = 40;
 
 [x, res, iter] = puntofisso(g, x0, tol, max_it);
