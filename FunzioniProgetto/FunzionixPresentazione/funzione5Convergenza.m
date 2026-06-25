@@ -5,7 +5,7 @@ g = @(x) (x + 2 - log(x + 2)) ./ (x.^2 + 1);
 
 x0 = 1;
 tol = 1.e-12;
-max_it = 150;
+max_it = 226;
 
 [x, res, iter] = puntofisso(g, x0, tol, max_it);
 
