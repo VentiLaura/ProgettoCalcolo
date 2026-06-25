@@ -9,9 +9,9 @@ max_it = 226;
 
 [x, res, iter] = puntofisso(g, x0, tol, max_it);
 
-fprintf('Soluzione: %f\n', x);
+fprintf('Soluzione: %.12g\n', x);
 fprintf('Numero di iterazioni: %d\n', iter);
 
 p = log(res(end))/log(res(end-1))
 
-creaGrafici(res);
+creaGrafico(res);

@@ -5,7 +5,7 @@ function crea_grafici(res)
     xlabel('Iterazione'); ylabel('Residuo'); grid on;
     title('Decrescita del Residuo');
 
-    % Fattore di Conversione Reale
+    % Contrazione
     if length(res) > 1
         C_reale = res(2:end) ./ res(1:end-1);
         figure();
