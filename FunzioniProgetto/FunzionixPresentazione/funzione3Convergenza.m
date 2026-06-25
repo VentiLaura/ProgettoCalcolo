@@ -19,6 +19,7 @@ iter
 figure()
 semilogy(res, 'b.-')
 xlabel('iter'); ylabel('residuo'); grid on
+title('Decrescita del Residuo');
 
 C_reale = res(2:end) ./ res(1:end-1);
 

@@ -18,5 +18,14 @@ iter
 figure()
 semilogy(res, 'b.-')
 xlabel('iter'); ylabel('residuo'); grid on
+title('Decrescita del Residuo');
+
+C_reale = res(2:end) ./ res(1:end-1);
+
+figure()
+plot(C_reale, 'r.-', 'LineWidth', 1.5)
+xlabel('iter'); ylabel('Fattore C (res_{n}/res_{n-1})'); grid on
+title('Verifica del Fattore di Conversione Reale');
+
 
 p = log(res(end))/log(res(end-1))
